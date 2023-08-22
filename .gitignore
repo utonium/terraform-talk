@@ -1,3 +1,6 @@
+# VIM swap files
+**/.*.swp
+
 # Local .terraform directories
 **/.terraform/*
 
