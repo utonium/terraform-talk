@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+# test/run_module_tests
+#
+# Kevin Cureton 2023 covered by the gpl-3.0
+#
+
+MODULE_PATH="$(dirname $0)/../modules/python"
+if [[ -z "$MODULE_PATH" ]] ; then
+  exit 1
+fi
+
+export PYTHONPATH="${MODULE_PATH}"
+
+python3 $MODULE_PATH/args.py -h
+python3 $MODULE_PATH/log.py
+
+python3 $MODULE_PATH/terraform/args.py -h
+python3 $MODULE_PATH/terraform/project.py

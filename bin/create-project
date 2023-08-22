@@ -1,0 +1,43 @@
+#!/usr/bin/python3
+# -------------------------------------------------------------------------------- 
+# create-project
+#
+# Create a new project and bootstrap the Terraform setup.
+#
+# Kevin Cureton 2023 covered by the gpl-3.0
+#
+# -------------------------------------------------------------------------------- 
+
+# -------------------------------------------------------------------------------- 
+# Imports
+# -------------------------------------------------------------------------------- 
+import os
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__, "../modules/python")
+
+import args
+import const
+import log
+import terraform.args
+import terraform.project
+
+# -------------------------------------------------------------------------------- 
+# Main
+#
+# A command line tool that generates a new terraform project. Each project is
+# configured to have a separate state for each deployment environment.
+# -------------------------------------------------------------------------------- 
+def main():
+
+    parser = argparse.ArgumentParser(description-"Create the necessary repo items to configure a new Terraform project")
+
+    terraform.args.addTerraformProjectArgs(parser)
+
+    args.addDeploymentEnvironmentArgs(parser)
+    args.addProjectArgs(parser)
+    args.addMockArgs(parser)
+
+    parsed_args = parser.parser_args()
+
+    
