@@ -19,23 +19,6 @@ import log
 # -------------------------------------------------------------------------------- 
 # Public interface
 # -------------------------------------------------------------------------------- 
-def renderTerraformTemplate(output_path: str, template_file: str, template_options: dict = {}) -> str:
-    """
-    Render out Terraform code using a templatepath and template options.
-    """
-    template_dir = os.path.join(os.path.dirname(__file__), "templates")
-    fsl = jinja2.FileSystemLoader(template_dir)
-    env = jinja2.Environment(loader=fsl)
-    template = env.get_template(template_file)
-    output = template.render(service=template_options)
-
-    log.info(f"Writing {output_path}...")
-    with open(output_path, "w") as fh:
-        fh.write(output)
-        fh.close()
-
-    return output
-
 def getProjectPath(project_name: str) -> str:
     """
     Get the path to the project.
@@ -61,6 +44,23 @@ def createProject(project_name: str, deployment_env: str) -> str:
         os.makedirs(project_deployment_env_path)
 
     return project_deployment_env_path
+
+def renderTemplate(output_path: str, template_file: str, template_options: dict = {}) -> str:
+    """
+    Render out Terraform code using a templatepath and template options.
+    """
+    template_dir = os.path.join(os.path.dirname(__file__), "templates")
+    fsl = jinja2.FileSystemLoader(template_dir)
+    env = jinja2.Environment(loader=fsl)
+    template = env.get_template(template_file)
+    output = template.render(service=template_options)
+
+    log.info(f"Writing {output_path}...")
+    with open(output_path, "w") as fh:
+        fh.write(output)
+        fh.close()
+
+    return output
 
 
 # -------------------------------------------------------------------------------- 
@@ -97,4 +97,4 @@ if __name__ == "__main__":
         "master_username": "admin",
         "master_password": "alsdwheh*$#*#@lkajdfie"
     }
-    renderTerraformTemplate(output_path, template_file, template_options)
+    renderTemplate(output_path, template_file, template_options)

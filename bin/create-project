@@ -10,10 +10,11 @@
 # -------------------------------------------------------------------------------- 
 # Imports
 # -------------------------------------------------------------------------------- 
+import argparse
 import os
 import sys
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__, "../modules/python")
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../modules/python"))
 
 import args
 import const
@@ -29,14 +30,42 @@ import terraform.project
 # -------------------------------------------------------------------------------- 
 def main():
 
-    parser = argparse.ArgumentParser(description-"Create the necessary repo items to configure a new Terraform project")
+    parser = argparse.ArgumentParser(description="Create the necessary repo items to configure a new Terraform project")
 
-    terraform.args.addTerraformProjectArgs(parser)
+    terraform.args.addTerraformArgs(parser)
 
     args.addDeploymentEnvironmentArgs(parser)
     args.addProjectArgs(parser)
     args.addMockArgs(parser)
 
-    parsed_args = parser.parser_args()
-
+    parsed_args = parser.parse_args()
     
+    project_name = parsed_args.project
+    deploy_env = parsed_args.deploy_env
+
+    project_path = terraform.project.getProjectPath(project_name)
+    log.info(f"project_path: {project_path}")
+
+    project_deployment_env_path = terraform.project.getProjectDeploymentEnvironmentPath(project_name, deploy_env)
+    log.info(f"project_deployment_env_path: {project_deployment_env_path}")
+
+    terraform.project.createProject(project_name, deploy_env)
+
+    output_path = os.path.join(project_deployment_env_path, "test_file")
+    template_file = "aws-rds-postgres.tmpl"
+    template_options = {
+        "project_name": project_name,
+        "instance_count": 2,
+        "instance_type": "db.t4g.micro",
+        "deployment_region": "us-west-2",
+        "master_username": "admin",
+        "master_password": "alsdwheh*$#*#@lkajdfie"
+    }
+    terraform.project.renderTemplate(output_path, template_file, template_options)
+
+    return const.EXIT_CODE_SUCCESS
+
+
+if __name__ == "__main__":
+    exit_code = main()
+    sys.exit(exit_code)

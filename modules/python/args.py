@@ -25,6 +25,7 @@ def addProjectArgs(parser: argparse.ArgumentParser) -> None:
     """
     parser.add_argument("--project",
         action="store",
+        dest="project",
         help="The name of the project to target")
 
 def addDeploymentEnvironmentArgs(parser: argparse.ArgumentParser) -> None:
@@ -33,6 +34,7 @@ def addDeploymentEnvironmentArgs(parser: argparse.ArgumentParser) -> None:
     """
     parser.add_argument("--deploy-env",
         action="store",
+        dest="deploy_env",
         metavar="DEPLOYMENT_ENVIRONMENT",
         required=True,
         choices=const.DEPLOYMENT_ENVIRONMENTS,
