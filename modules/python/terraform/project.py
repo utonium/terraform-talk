@@ -10,6 +10,7 @@
 # -------------------------------------------------------------------------------- 
 # Imports
 # -------------------------------------------------------------------------------- 
+import jinja2
 import os
 import sys
 
@@ -50,6 +51,18 @@ def getProjectDeploymentEnvironmentPath(project_name: str, deployment_env: str) 
     the_path = os.path.abspath(os.path.join(project_path, deployment_env))
     return the_path
 
+def createProject(project_name: str, deployment_env: str) -> str:
+    """
+    Create a project directory.
+    """
+    project_deployment_env_path = getProjectDeploymentEnvironmentPath(project_name, deployment_env)
+
+    if not os.path.exists(project_deployment_env_path):
+        os.makedirs(project_deployment_env_path)
+
+    return project_deployment_env_path
+
+
 # -------------------------------------------------------------------------------- 
 # Private interface
 # -------------------------------------------------------------------------------- 
@@ -63,16 +76,25 @@ if __name__ == "__main__":
     module_path = os.path.abspath(__file__)
     print(f"\nTesting {module_path}...")
 
-    project_path = getProjectPath("test_project")
+    project_name = "test_project"
+    deployment_env = "dev"
+
+    project_path = getProjectPath(project_name)
     log.info(f"project_path: {project_path}")
 
-    project_deployment_env_path = getProjectDeploymentEnvironmentPath("test_project", "dev")
+    project_deployment_env_path = getProjectDeploymentEnvironmentPath(project_name, deployment_env)
     log.info(f"project_deployment_env_path: {project_deployment_env_path}")
 
-    output_path = os.path.join(project_deployment_env_path, "test_file")
-    template_file = ""
-    template_options = {
-        XXX: ""
-    }
-#    renderTerraformTemplate(output_path, template_path, template_options)
+    createProject(project_name, deployment_env)
 
+    output_path = os.path.join(project_deployment_env_path, "test_file")
+    template_file = "aws-rds-postgres.tmpl"
+    template_options = {
+        "project_name": project_name,
+        "instance_count": 2,
+        "instance_type": "db.t4g.micro",
+        "deployment_region": "us-west-2",
+        "master_username": "admin",
+        "master_password": "alsdwheh*$#*#@lkajdfie"
+    }
+    renderTerraformTemplate(output_path, template_file, template_options)

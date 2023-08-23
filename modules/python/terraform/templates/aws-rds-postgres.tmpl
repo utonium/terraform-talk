@@ -1,0 +1,17 @@
+# -------------------------------------------------------------------------------- 
+# aws-rds-postgres.tmpl
+#
+# Kevin Cureton 2023 covered by the gpl-3.0
+# -------------------------------------------------------------------------------- 
+
+module "rds-{{ service.project_name }}" {
+  source = "../../../modules/terraform/aws-rds-postgres-v1"
+
+  project_name          = "{{ service.project_name }}"
+  rds_deployment_region = "{{ service.deployment_region }}"
+  rds_instance_count    = {{ service.instance_count }}
+  rds_instance_type     = "{{ service.instance_type }}"
+  rds_master_username   = "{{ service.master_username }}"
+  rds_master_password   = "{{ service.master_password }}"
+}
+
