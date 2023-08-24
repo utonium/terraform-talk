@@ -16,3 +16,9 @@ the tools.
 
 `create-project` can also be used to add new Terraform code to an
 already existing project.
+
+The link to the Terraform slides is
+
+https://docs.google.com/presentation/d/19xOjTywI4pWPDP43Fkz-_yd1q6-UCI8lWYl3VlQmr1g/edit?usp=sharing
+
+
