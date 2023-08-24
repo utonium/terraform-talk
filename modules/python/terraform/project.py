@@ -35,9 +35,9 @@ def getProjectDeploymentEnvironmentPath(project_name: str, deployment_env: str) 
     the_path = os.path.abspath(os.path.join(project_path, deployment_env))
     return the_path
 
-def createProject(project_name: str, deployment_env: str, deployment_region: str) -> str:
+def createAWSProject(project_name: str, deployment_env: str, deployment_region: str) -> str:
     """
-    Create a project directory.
+    Create an AWS project directory.
     """
     project_deployment_env_path = getProjectDeploymentEnvironmentPath(project_name, deployment_env)
 

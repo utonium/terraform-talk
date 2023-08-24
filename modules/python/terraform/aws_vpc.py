@@ -13,6 +13,7 @@ import os
 import sys
 
 import log
+import terraform.common
 import terraform.project
 
 # -------------------------------------------------------------------------------- 
@@ -28,11 +29,11 @@ def addVPC(project_name: str, deployment_env: str, deployment_region: str) -> No
     template_file = "aws-vpc.tf.tmpl"
     template_options = {
         "project_name": project_name,
-        "deployment_env": deplpoyment_env,
-        "deployment_region": deplpoyment_region,
+        "deployment_env": deployment_env,
+        "deployment_region": deployment_region,
     }
     output_path = os.path.join(project_deployment_env_path, template_file.replace(".tmpl", ""))
-    terraform.project.renderTemplate(output_path, template_file, template_options)
+    terraform.common.renderTemplate(output_path, template_file, template_options)
 
     return
 

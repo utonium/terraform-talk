@@ -34,7 +34,7 @@ resource "aws_vpc" "main" {
   assign_generated_ipv6_cidr_block = true
 
   tags = {
-    Name = "${project_name}-${var.deployment_env}-vpc"
+    Name = "${var.project_name}-${var.deployment_env}-vpc"
   }
 
   lifecycle {

@@ -45,6 +45,7 @@ def main():
     project_name = parsed_args.project
     deployment_env = parsed_args.deploy_env
 
+    # TODO: Make this an option
     deployment_region = "us-west-2"
 
     project_path = terraform.project.getProjectPath(project_name)
@@ -53,18 +54,10 @@ def main():
     project_deployment_env_path = terraform.project.getProjectDeploymentEnvironmentPath(project_name, deployment_env)
     log.info(f"project_deployment_env_path: {project_deployment_env_path}")
 
-    terraform.project.createProject(project_name, deployment_env, deployment_region)
-
-#    template_file = "aws-provider.tf.tmpl"
-#    template_options = {
-#        "project_name": project_name,
-#        "deployment_region": deployment_region
-#    }
-#    output_path = os.path.join(project_deployment_env_path, template_file.replace(".tmpl", ""))
-#    terraform.project.renderTemplate(output_path, template_file, template_options)
+    terraform.project.createAWSProject(project_name, deployment_env, deployment_region)
 
     if parsed_args.add_vpc:
-        terraform.aws-vpc.addVPC(project_name, deployment_env, deployment_region)
+        terraform.aws_vpc.addVPC(project_name, deployment_env, deployment_region)
 
     if parsed_args.add_postgresql_db:
         template_file = "aws-rds-postgres.tf.tmpl"

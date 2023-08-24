@@ -12,6 +12,7 @@ module "aws-vpc-{{ service.project_name }}" {
   source = "../../../modules/terraform/aws-vpc-v1"
 
   project_name      = "{{ service.project_name }}"
+  deployment_env    = "{{ service.deployment_env }}"
   deployment_region = "{{ service.deployment_region }}"
 }
 
