@@ -16,15 +16,15 @@ locals {
 #
 # Database infrastructure configuration
 #
-resource "aws_iam_role" "rds-postgresql-monitoring-role" {
-  name = var.rds_monitoring_iam_role
-}
+#resource "aws_iam_role" "rds-postgresql-monitoring-role" {
+#  name = var.rds_monitoring_iam_role
+#}
 
-resource "aws_security_group" "rds-postgresql" {
-  count = length(var.rds_security_group_name)
-
-  name = var.rds_security_group_name[count.index]
-}
+#resource "aws_security_group" "rds-postgresql" {
+#  count = length(var.rds_security_group_name)
+#
+#  name = var.rds_security_group_name[count.index]
+#}
 
 resource "aws_kms_key" "rds-postgresql" {
   description = "${var.project_name} - rds"

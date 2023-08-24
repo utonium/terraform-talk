@@ -23,6 +23,7 @@ def addTerraformArgs(parser: argparse.ArgumentParser) -> None:
     """
     parser.add_argument("--add-postgres-db",
         action="store_true",
+        dest="add_postgresql_db",
         help="Add a Postgres DB setup to a project")
 
 # -------------------------------------------------------------------------------- 
