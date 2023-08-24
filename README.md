@@ -19,6 +19,17 @@ already existing project.
 
 The link to the Terraform slides is
 
-https://docs.google.com/presentation/d/19xOjTywI4pWPDP43Fkz-_yd1q6-UCI8lWYl3VlQmr1g/edit?usp=sharing
+[Terraform Talk](https://docs.google.com/presentation/d/19xOjTywI4pWPDP43Fkz-_yd1q6-UCI8lWYl3VlQmr1g/edit?usp=sharing)
 
+## AWS setup
+
+For this example to work fully you'll need an Identity and Access Management (IAM) role
+configured in AWS. The role must be assumable by the user account you are using to access
+AWS. The `aws-provider.tf` file has blank fields for this role called `role_arn`. There
+are also blank fields that need to be populated with AWS access and secret keys for
+the user account that runs Terraform.
+
+As a matter of security, never commit files to the repository have the access and secret
+keys in them. A safer way to do this is using environment variables instead of defining
+them in the `aws-provider.tf` file.
 
