@@ -17,9 +17,9 @@ terraform {
 }
 
 provider "aws" {
-  region = "{{ service.deployment_region }}"
+  region = "us-west-2"
   assume_role {
     role_arn = ""
-    session_name = "terraform-{{ service.project_name }}-{{ service.deployment_region }}"
+    session_name = "terraform-vpc-us-west-2"
   }
 }

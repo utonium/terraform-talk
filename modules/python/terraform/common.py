@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 # -------------------------------------------------------------------------------- 
-# args.py
+# project.py
 #
-# Function for commonly used command line arguments.
+# Create Terraform projects.
 #
 # Kevin Cureton 2023 covered by the gpl-3.0
 # -------------------------------------------------------------------------------- 
@@ -10,26 +10,32 @@
 # -------------------------------------------------------------------------------- 
 # Imports
 # -------------------------------------------------------------------------------- 
-import argparse
+import jinja2
 import os
 import sys
+
+import log
 
 # -------------------------------------------------------------------------------- 
 # Public interface
 # -------------------------------------------------------------------------------- 
-def addTerraformArgs(parser: argparse.ArgumentParser) -> None:
+def renderTemplate(output_path: str, template_file: str, template_options: dict = {}) -> str:
     """
-    Register arguments used for Terraform setups.
+    Render out Terraform code using a templatepath and template options.
     """
-    parser.add_argument("--add-postgres-db",
-        action="store_true",
-        dest="add_postgresql_db",
-        help="Add a Postgres DB setup to a project")
+    template_dir = os.path.join(os.path.dirname(__file__), "templates")
+    fsl = jinja2.FileSystemLoader(template_dir)
+    env = jinja2.Environment(loader=fsl)
+    template = env.get_template(template_file)
+    output = template.render(service=template_options)
 
-    parser.add_argument("--add-vpc",
-        action="store_true",
-        dest="add_vpc",
-        help="Add a VPC setup to a project")
+    log.info(f"Writing {output_path}...")
+    with open(output_path, "w") as fh:
+        fh.write(output)
+        fh.close()
+
+    return output
+
 
 # -------------------------------------------------------------------------------- 
 # Private interface
@@ -43,7 +49,3 @@ def addTerraformArgs(parser: argparse.ArgumentParser) -> None:
 if __name__ == "__main__":
     module_path = os.path.abspath(__file__)
     print(f"\nTesting {module_path}...")
-
-    parser = argparse.ArgumentParser(description=f"Testing")
-    addTerraformArgs(parser)
-    parsed_args = parser.parse_args()
