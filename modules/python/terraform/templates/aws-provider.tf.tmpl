@@ -18,8 +18,10 @@ terraform {
 
 provider "aws" {
   region = "{{ service.deployment_region }}"
+  access_key = ""
+  secret_key = ""
   assume_role {
-    role_arn = ""
+    role_arn = "arn:aws:iam::443307129953:role/Terraform"
     session_name = "terraform-{{ service.project_name }}-{{ service.deployment_region }}"
   }
 }

@@ -18,6 +18,8 @@ terraform {
 
 provider "aws" {
   region = "us-west-2"
+  access_key = ""
+  secret_key = ""
   assume_role {
     role_arn = "arn:aws:iam::443307129953:role/Terraform"
     session_name = "terraform-vpc-us-west-2"
